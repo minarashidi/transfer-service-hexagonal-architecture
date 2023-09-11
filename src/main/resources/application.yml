@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  # graceful shutdown makes sure we have time to finnish any ongoing rest requests before terminating
+  # default value will be 30s before terminating
+  shutdown: graceful
+
+spring:
+  application:
+    name: transfer-service
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/transfer_service?prepareThreshold=0}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:}
+    driverClassName: org.postgresql.Driver
+    hikari:
+      maximumPoolSize: ${DB_MAX_POOL_SIZE:3}
+      autoCommit: false
+  liquibase:
+    enabled: false
+
+management:
+  server:
+    port: 9101
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus, health"
+      base-path: "/"
+      path-mapping:
+        prometheus: "metrics"

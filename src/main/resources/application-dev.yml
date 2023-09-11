@@ -1,0 +1,6 @@
+server:
+  shutdown: immediate
+
+logging.level:
+  com.rashidi: debug
+  org.springframework.jdbc.core: TRACE
